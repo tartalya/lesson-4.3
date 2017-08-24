@@ -23,14 +23,13 @@ if (isset($_POST['register'])) {
 
             $errorText = 'Такой пользователь уже существует';
         } else {
-            
-            
+
+
             $query = "INSERT INTO user (`login`, `password`) VALUES ('$login' , '$password')";
-            
+
             mysqli_query($link, $query);
-            
+
             echo 'Регистрация успешно завершена';
-            
         }
     }
 }
@@ -40,19 +39,17 @@ if (isset($_POST['sign_in'])) {
 
     $login = mysqli_real_escape_string($link, $_POST['login']);
     $password = md5($_POST['password']);
-        
-    if ($user = userAuth($link, $login, $password)) {
-   
-    session_start();
-    $_SESSION['user'] = $user;
-    
-    echo '<meta http-equiv="refresh" content="0; url=index.php">';
 
+    if ($user = userAuth($link, $login, $password)) {
+
+        session_start();
+        $_SESSION['user'] = $user;
+
+        echo '<meta http-equiv="refresh" content="0; url=index.php">';
     } else {
-        
+
         $errorText = 'Ошибка авторизации';
     }
-    
 }
 
 include 'logintemplate.php';

@@ -28,7 +28,7 @@ function userAuth($link, $login, $password)
 
     $result = mysqli_query($link, $query);
     $result = mysqli_fetch_assoc($result);
-    
+
 
     if (mysqli_affected_rows($link) > 0) {
 

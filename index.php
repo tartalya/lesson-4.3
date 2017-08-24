@@ -6,9 +6,8 @@ require_once 'config.php';
 session_start();
 
 if (empty($_SESSION['user'])) {
-    
+
     header('location: auth.php');
-    
 }
 
 
@@ -53,8 +52,8 @@ if (!empty($_GET['action']) && !empty($_GET['id'])) {
 
 $myUserId = $_SESSION['user']['id'];
 
-$query = "SELECT tasks.id, user_id, assigned_user_id, description, is_done, date_added, user.login FROM tasks INNER JOIN user ON tasks.assigned_user_id = user.id WHERE user_id = '$myUserId'";  //выборка только своих задач
-
+$query = "SELECT tasks.id, user_id, assigned_user_id, description, is_done, date_added, user.login FROM tasks INNER JOIN user ON tasks.assigned_user_id = user.id WHERE user_id = '$myUserId'";
+//выборка только своих задач с примоединением логина пользователя который поставил задачу
 
 
 
@@ -89,19 +88,18 @@ while ($row = mysqli_fetch_assoc($result)) {
 }
 
 if (!empty($_POST['assign'])) {
-    
+
     $tmp = explode('_', $_POST['user_id']);
-    
+
     $task = $tmp[0];
     $newUserId = $tmp[1];
-    
-    
+
+
     $query = "UPDATE tasks SET user_id = '$newUserId', assigned_user_id = '$myUserId' WHERE id = $task";
     mysqli_query($link, $query);
-   
-    
+
+
     echo '<meta http-equiv="refresh" content="0; url=index.php">';
-    
 }
 
 include 'template.php';
